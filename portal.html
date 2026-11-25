@@ -1,2 +1,773 @@
 <!-- Salin kode portal.html dari panel editor sebelah kanan ke file ini -->
-<!DOCTYPE html><html><head><meta charset="UTF-8"><title>portal.html</title></head><body><h1>Silakan tempel kode portal.html di sini</h1></body></html>
+<!DOCTYPE html><html><head><meta charset="UTF-8"><title>portal.html</title></head><body><h1><!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Portal Klien & Super Admin — Aurelia Royal Invite</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@700&family=Cormorant+Garamond:wght@600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        emeraldVelvet: '#061612',
+                        emeraldDeep: '#0B241E',
+                        obsidian: '#030907',
+                        goldChampagne: '#F5E7B2',
+                        goldPrimary: '#D4AF37',
+                        goldAntique: '#9E7618',
+                        ivoryPearl: '#F9F6EE',
+                    },
+                    fontFamily: {
+                        cinzel: ['"Cinzel Decorative"', 'serif'],
+                        editorial: ['"Cormorant Garamond"', 'serif'],
+                        sans: ['"Plus Jakarta Sans"', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body {
+            background-color: #030907;
+            color: #F9F6EE;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            background-image: radial-gradient(circle at top right, rgba(212, 175, 55, 0.08), transparent 45%);
+        }
+        .royal-panel {
+            background: linear-gradient(165deg, rgba(11, 36, 30, 0.78) 0%, rgba(4, 12, 10, 0.95) 100%);
+            backdrop-filter: blur(16px);
+            border: 1px solid rgba(212, 175, 55, 0.3);
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.75);
+        }
+        .btn-gold {
+            background: linear-gradient(135deg, #9E7618 0%, #D4AF37 50%, #F5E7B2 100%);
+            color: #030907;
+            font-weight: 700;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+        .btn-gold:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 8px 24px rgba(212, 175, 55, 0.4);
+        }
+        .input-luxury {
+            width: 100%;
+            background: rgba(3, 9, 7, 0.9);
+            border: 1px solid rgba(212, 175, 55, 0.32);
+            border-radius: 0.75rem;
+            padding: 0.7rem 0.95rem;
+            font-size: 0.8125rem;
+            color: #fff;
+        }
+        .input-luxury:focus {
+            outline: none;
+            border-color: #D4AF37;
+        }
+    </style>
+</head>
+<body class="min-h-screen antialiased">
+
+    <!-- =====================================================================
+         VIEW 1: UNIFIED LOGIN GATE (PELANGGAN & SUPER ADMIN)
+         ===================================================================== -->
+    <div id="login-view" class="min-h-screen flex items-center justify-center p-5">
+        <div class="w-full max-w-md royal-panel rounded-3xl p-7 sm:p-9">
+            <div class="text-center mb-7">
+                <a href="index.html" class="inline-flex items-center justify-center w-12 h-12 rotate-45 border border-goldPrimary bg-emeraldDeep mb-4">
+                    <span class="-rotate-45 font-cinzel text-lg font-bold text-goldChampagne">A</span>
+                </a>
+                <h1 class="font-editorial text-3xl font-bold text-white">Portal Aurelia VIP</h1>
+                <p class="text-xs text-ivoryPearl/65 mt-1">Masuk untuk mengelola undangan pernikahan atau administrasi klien</p>
+            </div>
+
+            <!-- Role Switcher Tabs -->
+            <div class="grid grid-cols-2 gap-2 p-1 rounded-2xl bg-obsidian border border-goldPrimary/25 mb-6">
+                <button id="tab-client" onclick="switchLoginRole('client')"
+                        class="py-2.5 rounded-xl text-xs font-bold uppercase tracking-wider bg-goldPrimary text-obsidian transition cursor-pointer">
+                    <i class="fa-solid fa-heart mr-1.5"></i>Pelanggan
+                </button>
+                <button id="tab-admin" onclick="switchLoginRole('admin')"
+                        class="py-2.5 rounded-xl text-xs font-bold uppercase tracking-wider text-goldChampagne/75 hover:text-white transition cursor-pointer">
+                    <i class="fa-solid fa-shield-halved mr-1.5"></i>Super Admin
+                </button>
+            </div>
+
+            <!-- Client Login Form -->
+            <form id="form-client-login" class="space-y-4">
+                <div>
+                    <label class="block text-xs text-goldChampagne mb-1.5">Slug / Kode Undangan</label>
+                    <input type="text" id="login-client-slug" value="raka-kinanti" required placeholder="Contoh: raka-kinanti" class="input-luxury">
+                </div>
+                <div>
+                    <label class="block text-xs text-goldChampagne mb-1.5">PIN Akses Undangan</label>
+                    <input type="password" id="login-client-pin" value="123456" required placeholder="Masukkan 6 digit PIN" class="input-luxury">
+                </div>
+                <button type="submit" class="btn-gold w-full py-3.5 rounded-xl text-xs uppercase tracking-widest cursor-pointer">
+                    Masuk ke Editor Undangan
+                </button>
+                <p class="text-[11px] text-center text-ivoryPearl/55 pt-1">
+                    Demo Pelanggan: Slug <code class="text-goldChampagne">raka-kinanti</code> • PIN <code class="text-goldChampagne">123456</code>
+                </p>
+            </form>
+
+            <!-- Super Admin Login Form -->
+            <form id="form-admin-login" class="space-y-4 hidden">
+                <div>
+                    <label class="block text-xs text-goldChampagne mb-1.5">Email / Username Admin</label>
+                    <input type="text" id="login-admin-user" value="admin@aurelia.id" required class="input-luxury">
+                </div>
+                <div>
+                    <label class="block text-xs text-goldChampagne mb-1.5">Master Password Admin</label>
+                    <input type="password" id="login-admin-pass" value="admin123" required class="input-luxury">
+                </div>
+                <button type="submit" class="btn-gold w-full py-3.5 rounded-xl text-xs uppercase tracking-widest cursor-pointer">
+                    Masuk ke Panel Super Admin
+                </button>
+                <p class="text-[11px] text-center text-ivoryPearl/55 pt-1">
+                    Demo Admin: <code class="text-goldChampagne">admin@aurelia.id</code> • Pass <code class="text-goldChampagne">admin123</code>
+                </p>
+            </form>
+
+            <div class="mt-6 pt-5 border-t border-goldPrimary/20 text-center">
+                <a href="index.html" class="text-xs text-goldChampagne/80 hover:text-goldPrimary">
+                    <i class="fa-solid fa-arrow-left mr-1"></i> Kembali ke Halaman Utama
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <!-- =====================================================================
+         VIEW 2: DASHBOARD PELANGGAN (CLIENT SELF-SERVICE STUDIO)
+         ===================================================================== -->
+    <div id="client-dashboard" class="hidden min-h-screen pb-16">
+        <header class="sticky top-0 z-40 bg-obsidian/90 backdrop-blur-xl border-b border-goldPrimary/25 px-5 py-3.5">
+            <div class="max-w-6xl mx-auto flex flex-wrap items-center justify-between gap-3">
+                <div class="flex items-center gap-3">
+                    <span class="font-cinzel font-bold text-goldChampagne text-sm">STUDIO PENGANTIN</span>
+                    <span id="client-badge-slug" class="px-2.5 py-0.5 rounded-full bg-emeraldDeep border border-goldPrimary/40 text-[11px] text-goldPrimary font-mono">raka-kinanti</span>
+                </div>
+                <div class="flex items-center gap-2.5">
+                    <a id="btn-preview-live-invite" href="invitation.html?u=raka-kinanti&to=Tamu+Kehormatan" target="_blank"
+                       class="px-4 py-2 rounded-full border border-goldPrimary/60 text-xs text-goldChampagne hover:bg-goldPrimary/15 transition">
+                        <i class="fa-solid fa-up-right-from-square mr-1.5"></i>Lihat Hasil Undangan
+                    </a>
+                    <button onclick="logoutPortal()" class="px-4 py-2 rounded-full bg-rose-950/70 border border-rose-500/40 text-xs text-rose-200 cursor-pointer">
+                        Keluar
+                    </button>
+                </div>
+            </div>
+        </header>
+
+        <div class="max-w-6xl mx-auto px-5 pt-7 grid lg:grid-cols-12 gap-7">
+            <!-- Left Column: Form Editor Undangan -->
+            <div class="lg:col-span-7 space-y-6">
+                <form id="client-editor-form" class="royal-panel rounded-3xl p-6 space-y-5">
+                    <div class="flex items-center justify-between border-b border-goldPrimary/25 pb-3">
+                        <h2 class="font-editorial text-2xl font-bold text-white">1. Data Mempelai, Foto & Tema</h2>
+                        <span class="text-[11px] text-emerald-400"><i class="fa-solid fa-circle-check mr-1"></i>Status Aktif</span>
+                    </div>
+
+                    <div class="grid sm:grid-cols-2 gap-4">
+                        <div>
+                            <label class="block text-xs text-goldChampagne mb-1">Jenis Acara</label>
+                            <select id="edit-event-type" onchange="updateEditorLabelsByEvent()" class="input-luxury">
+                                <option value="wedding">Pernikahan (Wedding)</option>
+                                <option value="engagement">Pertunangan (Engagement / Lamaran)</option>
+                                <option value="aqiqah">Akikah & Tasmiyah Bayi</option>
+                                <option value="birthday">Ulang Tahun (Birthday Party)</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label class="block text-xs text-goldChampagne mb-1">Tema Tampilan</label>
+                            <select id="edit-theme" class="input-luxury">
+                                <option value="emerald">Royal Emerald & Gold</option>
+                                <option value="obsidian">Obsidian Champagne Noir</option>
+                                <option value="crimson">Royal Crimson Heritage</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="grid sm:grid-cols-3 gap-4">
+                        <div>
+                            <label class="block text-xs text-goldChampagne mb-1">Monogram Inisial</label>
+                            <input type="text" id="edit-monogram" class="input-luxury" placeholder="R&K">
+                        </div>
+                        <div>
+                            <label id="label-couple-short" class="block text-xs text-goldChampagne mb-1">Nama Panggilan Pasangan</label>
+                            <input type="text" id="edit-couple-short" class="input-luxury" placeholder="Raka & Kinanti">
+                        </div>
+                        <div>
+                            <label class="block text-xs text-goldChampagne mb-1">Tanggal Utama (Teks)</label>
+                            <input type="text" id="edit-date-text" class="input-luxury" placeholder="Sabtu, 12 Desember 2026">
+                        </div>
+                    </div>
+
+                    <!-- Subjek Utama 1 (Pria / Bayi / Yang Berulang Tahun) -->
+                    <div class="grid sm:grid-cols-2 gap-4 pt-2 border-t border-goldPrimary/15">
+                        <div>
+                            <label id="label-groom-name" class="block text-xs text-goldChampagne mb-1">Nama Lengkap Pria</label>
+                            <input type="text" id="edit-groom-name" class="input-luxury">
+                        </div>
+                        <div>
+                            <label id="label-groom-photo" class="block text-xs text-goldChampagne mb-1">Foto Utama 1 (URL / Upload)</label>
+                            <div class="flex gap-2">
+                                <input type="text" id="edit-groom-photo" class="input-luxury" placeholder="https://...">
+                                <label class="px-3 py-2 rounded-xl bg-goldPrimary/20 border border-goldPrimary/50 text-goldChampagne text-xs cursor-pointer flex items-center shrink-0">
+                                    <i class="fa-solid fa-upload"></i>
+                                    <input type="file" accept="image/*" class="hidden" onchange="handleImageUpload(this, 'edit-groom-photo')">
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Subjek Utama 2 (Wanita — otomatis disembunyikan jika Akikah / Ultah) -->
+                    <div id="bride-editor-group" class="grid sm:grid-cols-2 gap-4">
+                        <div>
+                            <label class="block text-xs text-goldChampagne mb-1">Nama Lengkap Wanita</label>
+                            <input type="text" id="edit-bride-name" class="input-luxury">
+                        </div>
+                        <div>
+                            <label class="block text-xs text-goldChampagne mb-1">Foto Mempelai Wanita (URL / Upload)</label>
+                            <div class="flex gap-2">
+                                <input type="text" id="edit-bride-photo" class="input-luxury" placeholder="https://...">
+                                <label class="px-3 py-2 rounded-xl bg-goldPrimary/20 border border-goldPrimary/50 text-goldChampagne text-xs cursor-pointer flex items-center shrink-0">
+                                    <i class="fa-solid fa-upload"></i>
+                                    <input type="file" accept="image/*" class="hidden" onchange="handleImageUpload(this, 'edit-bride-photo')">
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Sub-keterangan Orang Tua / Usia -->
+                    <div>
+                        <label id="label-parents-info" class="block text-xs text-goldChampagne mb-1">Keterangan Orang Tua / Detail Tambahan</label>
+                        <input type="text" id="edit-parents-info" class="input-luxury" placeholder="Putra & Putri dari Keluarga Besar...">
+                    </div>
+
+                    <!-- Detail Lokasi, Musik YouTube & Amplop Digital -->
+                    <div class="space-y-4 pt-3 border-t border-goldPrimary/20">
+                        <h3 class="font-editorial text-xl font-bold text-white">2. Lokasi, Musik YouTube & Amplop Digital</h3>
+                        <div class="grid sm:grid-cols-2 gap-4">
+                            <div>
+                                <label class="block text-xs text-goldChampagne mb-1">Nama Gedung / Tempat</label>
+                                <input type="text" id="edit-venue" class="input-luxury" placeholder="The Ritz-Carlton Jakarta">
+                            </div>
+                            <div>
+                                <label class="block text-xs text-goldChampagne mb-1">Link Sharelock Google Maps</label>
+                                <input type="url" id="edit-maps-url" class="input-luxury" placeholder="https://maps.google.com/...">
+                            </div>
+                        </div>
+                        <div>
+                            <label class="block text-xs text-goldChampagne mb-1">Alamat Lengkap Acara</label>
+                            <input type="text" id="edit-address" class="input-luxury" placeholder="Jl. Jend. Sudirman...">
+                        </div>
+                        <div>
+                            <label class="block text-xs text-goldChampagne mb-1">Link / ID Lagu YouTube Latar</label>
+                            <input type="text" id="edit-yt-id" class="input-luxury" placeholder="Tempel link YouTube atau ID video (misal: 2Vv-BfVoq4g)">
+                        </div>
+                        <div class="grid sm:grid-cols-2 gap-4">
+                            <div>
+                                <label class="block text-xs text-goldChampagne mb-1">Bank & Nomor Rekening</label>
+                                <input type="text" id="edit-bank1" class="input-luxury" placeholder="BANK BCA - 8830 1234 5678">
+                            </div>
+                            <div>
+                                <label class="block text-xs text-goldChampagne mb-1">Atas Nama Rekening</label>
+                                <input type="text" id="edit-bank1-holder" class="input-luxury" placeholder="a.n. Raka Aditya Pratama">
+                            </div>
+                        </div>
+                    </div>
+
+                    <button type="submit" class="btn-gold w-full py-3.5 rounded-xl text-xs uppercase tracking-widest cursor-pointer">
+                        <i class="fa-solid fa-floppy-disk mr-1.5"></i>Simpan & Terbitkan Perubahan
+                    </button>
+                </form>
+            </div>
+
+            <!-- Right Column: Bulk WhatsApp Blast & Rekap RSVP -->
+            <div class="lg:col-span-5 space-y-6">
+                <!-- Bulk WhatsApp Generator -->
+                <div class="royal-panel rounded-3xl p-6 space-y-4">
+                    <div class="flex items-center justify-between border-b border-goldPrimary/25 pb-3">
+                        <h2 class="font-editorial text-2xl font-bold text-white">3. Blast Undangan WA</h2>
+                        <i class="fa-brands fa-whatsapp text-emerald-400 text-xl"></i>
+                    </div>
+                    <div>
+                        <label class="block text-xs text-goldChampagne mb-1">Gaya Kalimat Pengantar</label>
+                        <select id="wa-template-style" onchange="renderBulkGuestQueue()" class="input-luxury">
+                            <option value="resmi">Resmi / Formal</option>
+                            <option value="islami">Islami (Assalamu'alaikum)</option>
+                            <option value="santai">Santai & Akrab</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label class="block text-xs text-goldChampagne mb-1">Daftar Nama Tamu (1 Nama per Baris)</label>
+                        <textarea id="wa-bulk-names" rows="4" oninput="renderBulkGuestQueue()" class="input-luxury" placeholder="Bapak Budi Santoso&#10;Ibu Rina Marlina&#10;Keluarga Besar H. Ahmad">Bapak Budi Santoso
+Ibu Rina Marlina
+Keluarga Besar H. Ahmad</textarea>
+                    </div>
+                    <div id="wa-bulk-list" class="space-y-2 max-h-56 overflow-y-auto pr-1"></div>
+                </div>
+
+                <!-- Rekap RSVP & Ucapan Tamu -->
+                <div class="royal-panel rounded-3xl p-6 space-y-4">
+                    <div class="flex items-center justify-between border-b border-goldPrimary/25 pb-3">
+                        <h2 class="font-editorial text-2xl font-bold text-white">4. Rekap RSVP & Ucapan</h2>
+                        <span id="client-rsvp-total" class="px-2.5 py-0.5 rounded-full bg-emeraldDeep border border-goldPrimary/40 text-[11px] text-goldChampagne">0 Ucapan</span>
+                    </div>
+                    <div id="client-rsvp-feed" class="space-y-2.5 max-h-64 overflow-y-auto pr-1 text-xs"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- =====================================================================
+         VIEW 3: DASHBOARD SUPER ADMIN (KELOLA KLIEN & PAKET)
+         ===================================================================== -->
+    <div id="admin-dashboard" class="hidden min-h-screen pb-16">
+        <header class="sticky top-0 z-40 bg-obsidian/90 backdrop-blur-xl border-b border-goldPrimary/25 px-5 py-3.5">
+            <div class="max-w-6xl mx-auto flex flex-wrap items-center justify-between gap-3">
+                <div class="flex items-center gap-3">
+                    <span class="font-cinzel font-bold text-goldChampagne text-sm">SUPER ADMIN PANEL</span>
+                    <span class="px-2.5 py-0.5 rounded-full bg-goldPrimary/15 border border-goldPrimary/40 text-[10px] text-goldPrimary">SaaS Control</span>
+                </div>
+                <div class="flex items-center gap-3 text-xs">
+                    <span class="text-ivoryPearl/75">Total Klien: <strong id="admin-stat-clients" class="text-goldChampagne">0</strong></span>
+                    <span class="text-ivoryPearl/75">Aktif: <strong id="admin-stat-active" class="text-emerald-400">0</strong></span>
+                    <button onclick="logoutPortal()" class="px-4 py-2 rounded-full bg-rose-950/70 border border-rose-500/40 text-xs text-rose-200 cursor-pointer">
+                        Keluar
+                    </button>
+                </div>
+            </div>
+        </header>
+
+        <div class="max-w-6xl mx-auto px-5 pt-7 grid lg:grid-cols-12 gap-7">
+            <div class="lg:col-span-4 royal-panel rounded-3xl p-6 h-fit">
+                <h2 class="font-editorial text-2xl font-bold text-white mb-4">Buat Akun Undangan Baru</h2>
+                <form id="admin-create-client-form" class="space-y-4">
+                    <div>
+                        <label class="block text-xs text-goldChampagne mb-1">Slug URL (Tanpa Spasi)</label>
+                        <input type="text" id="new-client-slug" required placeholder="misal: andi-sari" class="input-luxury">
+                    </div>
+                    <div>
+                        <label class="block text-xs text-goldChampagne mb-1">Nama Pasangan / Subjek Acara</label>
+                        <input type="text" id="new-client-names" required placeholder="misal: Andi & Sari" class="input-luxury">
+                    </div>
+                    <div>
+                        <label class="block text-xs text-goldChampagne mb-1">PIN Akses Klien (6 Digit)</label>
+                        <input type="text" id="new-client-pin" value="123456" required class="input-luxury">
+                    </div>
+                    <div>
+                        <label class="block text-xs text-goldChampagne mb-1">Jenis Acara</label>
+                        <select id="new-client-event-type" class="input-luxury">
+                            <option value="wedding">Pernikahan (Wedding)</option>
+                            <option value="engagement">Pertunangan / Lamaran</option>
+                            <option value="aqiqah">Akikah & Tasmiyah</option>
+                            <option value="birthday">Ulang Tahun</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label class="block text-xs text-goldChampagne mb-1">Pilihan Tema Awal</label>
+                        <select id="new-client-theme" class="input-luxury">
+                            <option value="emerald">Royal Emerald & Gold</option>
+                            <option value="obsidian">Obsidian Champagne Noir</option>
+                            <option value="crimson">Royal Crimson Heritage</option>
+                        </select>
+                    </div>
+                    <button type="submit" class="btn-gold w-full py-3 rounded-xl text-xs uppercase tracking-widest cursor-pointer">
+                        <i class="fa-solid fa-plus mr-1.5"></i>Terbitkan Akun Klien
+                    </button>
+                </form>
+            </div>
+
+            <div class="lg:col-span-8 royal-panel rounded-3xl p-6 overflow-x-auto">
+                <h2 class="font-editorial text-2xl font-bold text-white mb-4">Daftar Klien & Kontrol Akses</h2>
+                <table class="w-full text-left text-xs">
+                    <thead>
+                        <tr class="border-b border-goldPrimary/30 text-goldChampagne uppercase text-[10px] tracking-wider">
+                            <th class="pb-3">Pasangan / Slug</th>
+                            <th class="pb-3">PIN Klien</th>
+                            <th class="pb-3">Tema</th>
+                            <th class="pb-3">Status</th>
+                            <th class="pb-3 text-right">Aksi</th>
+                        </tr>
+                    </thead>
+                    <tbody id="admin-clients-tbody" class="divide-y divide-goldPrimary/15"></tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <div id="portal-toast" class="fixed top-6 left-1/2 -translate-x-1/2 z-50 hidden bg-emeraldVelvet border border-goldPrimary text-goldChampagne px-5 py-3 rounded-full shadow-2xl text-xs font-semibold">
+        Tersimpan!
+    </div>
+
+    <script>
+        let activeClientSlug = null;
+
+        const DEFAULT_CLIENTS_DB = {
+            "raka-kinanti": {
+                slug: "raka-kinanti",
+                pin: "123456",
+                status: "active",
+                eventType: "wedding",
+                theme: "emerald",
+                monogram: "R&K",
+                coupleShort: "Raka & Kinanti",
+                dateText: "Sabtu, 12 Desember 2026",
+                groomName: "Raka Aditya Pratama, S.T.",
+                groomPhoto: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=600&q=85",
+                brideName: "Kinanti Maharani Putri, S.E.",
+                bridePhoto: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=600&q=85",
+                parentsInfo: "Putra Pertama Bpk. Hendra & Putra Kedua Bpk. Ahmad",
+                venue: "The Ritz-Carlton Jakarta, Pacific Place",
+                address: "Jl. Jend. Sudirman Kav. 52-53, Senayan, Jakarta Selatan",
+                mapsUrl: "https://maps.google.com/?q=The+Ritz-Carlton+Jakarta",
+                youtubeId: "2Vv-BfVoq4g",
+                bank1: "BANK BCA - 8830 1234 5678",
+                bank1Holder: "a.n. Raka Aditya Pratama"
+            },
+            "baby-arkan": {
+                slug: "baby-arkan",
+                pin: "112233",
+                status: "active",
+                eventType: "aqiqah",
+                theme: "emerald",
+                monogram: "A",
+                coupleShort: "Arkanza Zayn Alfarizi",
+                dateText: "Minggu, 10 Januari 2027",
+                groomName: "Arkanza Zayn Alfarizi",
+                groomPhoto: "https://images.unsplash.com/photo-1519689680058-324335c77eba?auto=format&fit=crop&w=600&q=85",
+                brideName: "",
+                bridePhoto: "",
+                parentsInfo: "Putra Pertama dari Bapak Reza Alfarizi & Ibu Nabila Putri",
+                venue: "Kediaman Keluarga Bapak Reza Alfarizi",
+                address: "Jl. Cendana Indah No. 18, Menteng, Jakarta Pusat",
+                mapsUrl: "https://maps.google.com",
+                youtubeId: "2Vv-BfVoq4g",
+                bank1: "BANK BSI - 7120 9988 7766",
+                bank1Holder: "a.n. Reza Alfarizi"
+            }
+        };
+
+        function getClientsDB() {
+            const stored = localStorage.getItem('aurelia_clients_db');
+            if (!stored) {
+                localStorage.setItem('aurelia_clients_db', JSON.stringify(DEFAULT_CLIENTS_DB));
+                return { ...DEFAULT_CLIENTS_DB };
+            }
+            return JSON.parse(stored);
+        }
+
+        function saveClientsDB(db) {
+            localStorage.setItem('aurelia_clients_db', JSON.stringify(db));
+        }
+
+        function showToast(msg) {
+            const toast = document.getElementById('portal-toast');
+            toast.textContent = msg;
+            toast.classList.remove('hidden');
+            setTimeout(() => toast.classList.add('hidden'), 2600);
+        }
+
+        function extractYouTubeId(input) {
+            const val = (input || '').trim();
+            const match = val.match(/(?:youtu\.be\/|youtube\.com\/(?:watch\?v=|embed\/|shorts\/))([A-Za-z0-9_-]{11})/);
+            return match ? match[1] : val;
+        }
+
+        function handleImageUpload(inputEl, targetInputId) {
+            const file = inputEl.files && inputEl.files[0];
+            if (!file) return;
+            const reader = new FileReader();
+            reader.onload = function (evt) {
+                const img = new Image();
+                img.onload = function () {
+                    const canvas = document.createElement('canvas');
+                    const maxW = 720;
+                    const scale = Math.min(1, maxW / img.width);
+                    canvas.width = img.width * scale;
+                    canvas.height = img.height * scale;
+                    canvas.getContext('2d').drawImage(img, 0, 0, canvas.width, canvas.height);
+                    document.getElementById(targetInputId).value = canvas.toDataURL('image/jpeg', 0.82);
+                    showToast('Foto berhasil diunggah & dikompres!');
+                };
+                img.src = evt.target.result;
+            };
+            reader.readAsDataURL(file);
+        }
+
+        function switchLoginRole(role) {
+            const tabClient = document.getElementById('tab-client');
+            const tabAdmin = document.getElementById('tab-admin');
+            const formClient = document.getElementById('form-client-login');
+            const formAdmin = document.getElementById('form-admin-login');
+
+            if (role === 'client') {
+                tabClient.classList.add('bg-goldPrimary', 'text-obsidian');
+                tabClient.classList.remove('text-goldChampagne/75');
+                tabAdmin.classList.remove('bg-goldPrimary', 'text-obsidian');
+                tabAdmin.classList.add('text-goldChampagne/75');
+                formClient.classList.remove('hidden');
+                formAdmin.classList.add('hidden');
+            } else {
+                tabAdmin.classList.add('bg-goldPrimary', 'text-obsidian');
+                tabAdmin.classList.remove('text-goldChampagne/75');
+                tabClient.classList.remove('bg-goldPrimary', 'text-obsidian');
+                tabClient.classList.add('text-goldChampagne/75');
+                formAdmin.classList.remove('hidden');
+                formClient.classList.add('hidden');
+            }
+        }
+
+        document.getElementById('form-client-login').addEventListener('submit', function (e) {
+            e.preventDefault();
+            const slug = document.getElementById('login-client-slug').value.trim().toLowerCase();
+            const pin = document.getElementById('login-client-pin').value.trim();
+            const db = getClientsDB();
+            const client = db[slug];
+
+            if (!client) {
+                showToast('Slug undangan tidak ditemukan!');
+                return;
+            }
+            if (client.pin !== pin) {
+                showToast('PIN akses salah!');
+                return;
+            }
+            activeClientSlug = slug;
+            openClientDashboard(client);
+        });
+
+        function updateEditorLabelsByEvent() {
+            const type = document.getElementById('edit-event-type').value;
+            const brideGroup = document.getElementById('bride-editor-group');
+            const lblCouple = document.getElementById('label-couple-short');
+            const lblGroom = document.getElementById('label-groom-name');
+
+            if (type === 'aqiqah') {
+                brideGroup.classList.add('hidden');
+                lblCouple.textContent = 'Nama Panggilan Bayi';
+                lblGroom.textContent = 'Nama Lengkap Bayi';
+            } else if (type === 'birthday') {
+                brideGroup.classList.add('hidden');
+                lblCouple.textContent = 'Nama & Usia (Misal: Clara Sweet 17th)';
+                lblGroom.textContent = 'Nama Lengkap Yang Berulang Tahun';
+            } else {
+                brideGroup.classList.remove('hidden');
+                lblCouple.textContent = 'Nama Panggilan Pasangan';
+                lblGroom.textContent = 'Nama Lengkap Pria';
+            }
+        }
+
+        function openClientDashboard(clientData) {
+            document.getElementById('login-view').classList.add('hidden');
+            document.getElementById('client-dashboard').classList.remove('hidden');
+
+            document.getElementById('client-badge-slug').textContent = clientData.slug;
+            document.getElementById('btn-preview-live-invite').href = `invitation.html?u=${clientData.slug}&to=Tamu+Kehormatan`;
+
+            document.getElementById('edit-event-type').value = clientData.eventType || 'wedding';
+            document.getElementById('edit-theme').value = clientData.theme || 'emerald';
+            document.getElementById('edit-monogram').value = clientData.monogram;
+            document.getElementById('edit-couple-short').value = clientData.coupleShort;
+            document.getElementById('edit-date-text').value = clientData.dateText;
+            document.getElementById('edit-groom-name').value = clientData.groomName;
+            document.getElementById('edit-groom-photo').value = clientData.groomPhoto;
+            document.getElementById('edit-bride-name').value = clientData.brideName || '';
+            document.getElementById('edit-bride-photo').value = clientData.bridePhoto || '';
+            document.getElementById('edit-parents-info').value = clientData.parentsInfo || '';
+            document.getElementById('edit-venue').value = clientData.venue;
+            document.getElementById('edit-address').value = clientData.address;
+            document.getElementById('edit-maps-url').value = clientData.mapsUrl || '';
+            document.getElementById('edit-yt-id').value = clientData.youtubeId;
+            document.getElementById('edit-bank1').value = clientData.bank1;
+            document.getElementById('edit-bank1-holder').value = clientData.bank1Holder;
+
+            updateEditorLabelsByEvent();
+            renderBulkGuestQueue();
+            loadClientRsvpFeed(clientData.slug);
+        }
+
+        document.getElementById('client-editor-form').addEventListener('submit', function (e) {
+            e.preventDefault();
+            if (!activeClientSlug) return;
+            const db = getClientsDB();
+            const current = db[activeClientSlug];
+
+            db[activeClientSlug] = {
+                ...current,
+                eventType: document.getElementById('edit-event-type').value,
+                theme: document.getElementById('edit-theme').value,
+                monogram: document.getElementById('edit-monogram').value.trim(),
+                coupleShort: document.getElementById('edit-couple-short').value.trim(),
+                dateText: document.getElementById('edit-date-text').value.trim(),
+                groomName: document.getElementById('edit-groom-name').value.trim(),
+                groomPhoto: document.getElementById('edit-groom-photo').value.trim(),
+                brideName: document.getElementById('edit-bride-name').value.trim(),
+                bridePhoto: document.getElementById('edit-bride-photo').value.trim(),
+                parentsInfo: document.getElementById('edit-parents-info').value.trim(),
+                venue: document.getElementById('edit-venue').value.trim(),
+                address: document.getElementById('edit-address').value.trim(),
+                mapsUrl: document.getElementById('edit-maps-url').value.trim(),
+                youtubeId: extractYouTubeId(document.getElementById('edit-yt-id').value),
+                bank1: document.getElementById('edit-bank1').value.trim(),
+                bank1Holder: document.getElementById('edit-bank1-holder').value.trim()
+            };
+
+            saveClientsDB(db);
+            showToast("Perubahan undangan berhasil diterbitkan!");
+        });
+
+        function renderBulkGuestQueue() {
+            const raw = document.getElementById('wa-bulk-names').value;
+            const names = raw.split('\n').map(n => n.trim()).filter(Boolean);
+            const baseUrl = window.location.href.replace(/portal(\.html)?/, 'invitation.html').split('?')[0];
+            const slug = activeClientSlug || 'raka-kinanti';
+            const couple = document.getElementById('edit-couple-short').value || 'Kami';
+            const style = document.getElementById('wa-template-style').value;
+
+            document.getElementById('wa-bulk-list').innerHTML = names.map((guest, idx) => {
+                const inviteUrl = `${baseUrl}?u=${slug}&to=${encodeURIComponent(guest)}`;
+                let msg = '';
+                if (style === 'islami') {
+                    msg = `Assalamu'alaikum Wr. Wb.\nKepada Yth. *${guest}*,\n\nDengan memohon rahmat dan ridho Allah SWT, kami mengundang Anda untuk menghadiri acara *${couple}*.\n\nBuka undangan digital:\n${inviteUrl}\n\nWassalamu'alaikum Wr. Wb.`;
+                } else if (style === 'santai') {
+                    msg = `Halo *${guest}*! 👋\n\nKami mau mengundang kamu untuk hadir di momen spesial *${couple}*.\n\nCek detail acara & lokasi di sini ya:\n${inviteUrl}\n\nDitunggu kehadirannya! ✨`;
+                } else {
+                    msg = `Kepada Yth. *${guest}*,\n\nTanpa mengurangi rasa hormat, perkenankan kami mengundang Anda untuk menghadiri acara *${couple}*.\n\nTautan undangan digital:\n${inviteUrl}\n\nMerupakan suatu kehormatan bagi kami apabila Anda berkenan hadir.`;
+                }
+                const waHref = `https://wa.me/?text=${encodeURIComponent(msg)}`;
+                return `
+                    <div class="flex items-center justify-between gap-2 p-2.5 rounded-xl bg-obsidian/85 border border-goldPrimary/25 text-xs">
+                        <span class="truncate text-ivoryPearl font-medium">${idx + 1}. ${guest}</span>
+                        <a href="${waHref}" target="_blank" onclick="this.textContent='Terkirim ✓'; this.classList.add('opacity-75')"
+                           class="btn-gold px-3 py-1.5 rounded-lg text-[10px] uppercase tracking-wider shrink-0">
+                            <i class="fa-brands fa-whatsapp mr-1"></i>Kirim WA
+                        </a>
+                    </div>
+                `;
+            }).join('');
+        }
+
+        function loadClientRsvpFeed(slug) {
+            const wishes = JSON.parse(localStorage.getItem(`wishes_${slug}`)) || [
+                { name: "dr. Farhan Pratama", status: "Hadir", guests: "2 Orang", message: "Selamat menempuh hidup baru! Semoga sakinah mawaddah warahmah." }
+            ];
+            document.getElementById('client-rsvp-total').textContent = `${wishes.length} Ucapan`;
+            document.getElementById('client-rsvp-feed').innerHTML = wishes.map(w => `
+                <div class="p-3.5 rounded-xl bg-obsidian/80 border border-goldPrimary/25">
+                    <div class="flex justify-between items-center mb-1">
+                        <strong class="text-goldChampagne">${w.name}</strong>
+                        <span class="px-2 py-0.5 rounded-full bg-emerald-950 text-emerald-300 text-[10px]">${w.status} (${w.guests})</span>
+                    </div>
+                    <p class="text-ivoryPearl/80">${w.message}</p>
+                </div>
+            `).join('');
+        }
+
+        document.getElementById('admin-create-client-form').addEventListener('submit', function (e) {
+            e.preventDefault();
+            const slug = document.getElementById('new-client-slug').value.trim().toLowerCase().replace(/[^a-z0-9-]/g, '-');
+            const names = document.getElementById('new-client-names').value.trim();
+            const pin = document.getElementById('new-client-pin').value.trim();
+            const eventType = document.getElementById('new-client-event-type').value;
+            const theme = document.getElementById('new-client-theme').value;
+
+            const db = getClientsDB();
+            if (db[slug]) {
+                showToast("Slug sudah digunakan klien lain!");
+                return;
+            }
+
+            const initials = names.includes('&')
+                ? names.split('&').map(s => s.trim().charAt(0).toUpperCase()).join('&')
+                : names.charAt(0).toUpperCase();
+
+            db[slug] = {
+                ...DEFAULT_CLIENTS_DB["raka-kinanti"],
+                slug,
+                pin,
+                eventType,
+                theme,
+                monogram: initials,
+                coupleShort: names,
+                groomName: names.split('&')[0]?.trim() || names,
+                brideName: names.split('&')[1]?.trim() || ""
+            };
+
+            saveClientsDB(db);
+            renderAdminTable();
+            document.getElementById('new-client-slug').value = '';
+            document.getElementById('new-client-names').value = '';
+            showToast(`Akun undangan ${names} berhasil dibuat!`);
+        });
+
+        document.getElementById('form-admin-login').addEventListener('submit', function (e) {
+            e.preventDefault();
+            const user = document.getElementById('login-admin-user').value.trim();
+            const pass = document.getElementById('login-admin-pass').value.trim();
+            if (user === "admin@aurelia.id" && pass === "admin123") {
+                document.getElementById('login-view').classList.add('hidden');
+                document.getElementById('admin-dashboard').classList.remove('hidden');
+                renderAdminTable();
+            } else {
+                showToast("Kredensial Super Admin tidak valid!");
+            }
+        });
+
+        function logoutPortal() {
+            activeClientSlug = null;
+            document.getElementById('client-dashboard').classList.add('hidden');
+            document.getElementById('admin-dashboard').classList.add('hidden');
+            document.getElementById('login-view').classList.remove('hidden');
+        }
+
+        function toggleClientStatus(slug) {
+            const db = getClientsDB();
+            if (!db[slug]) return;
+            db[slug].status = db[slug].status === 'active' ? 'suspended' : 'active';
+            saveClientsDB(db);
+            renderAdminTable();
+            showToast(`Status ${slug} diperbarui!`);
+        }
+
+        function renderAdminTable() {
+            const db = getClientsDB();
+            const list = Object.values(db);
+            document.getElementById('admin-stat-clients').textContent = list.length;
+            document.getElementById('admin-stat-active').textContent = list.filter(c => c.status === 'active').length;
+
+            document.getElementById('admin-clients-tbody').innerHTML = list.map(c => `
+                <tr>
+                    <td class="py-3.5">
+                        <strong class="text-white block">${c.coupleShort}</strong>
+                        <span class="font-mono text-[10px] text-goldPrimary">?u=${c.slug}</span>
+                    </td>
+                    <td class="py-3.5 font-mono text-goldChampagne">${c.pin}</td>
+                    <td class="py-3.5 uppercase text-[10px]">${c.theme} (${c.eventType || 'wedding'})</td>
+                    <td class="py-3.5">
+                        <span class="px-2.5 py-0.5 rounded-full text-[10px] font-bold ${c.status === 'active' ? 'bg-emerald-950 text-emerald-300 border border-emerald-500/40' : 'bg-rose-950 text-rose-300 border border-rose-500/40'}">
+                            ${c.status === 'active' ? 'AKTIF' : 'NONAKTIF'}
+                        </span>
+                    </td>
+                    <td class="py-3.5 text-right space-x-1.5">
+                        <a href="invitation.html?u=${c.slug}&to=Tamu+VIP" target="_blank"
+                           class="inline-block px-2.5 py-1.5 rounded-lg border border-goldPrimary/50 text-goldChampagne hover:bg-goldPrimary hover:text-obsidian transition">
+                            Buka
+                        </a>
+                        <button onclick="toggleClientStatus('${c.slug}')"
+                                class="px-2.5 py-1.5 rounded-lg bg-obsidian border border-goldPrimary/30 text-ivoryPearl/80 hover:border-goldPrimary cursor-pointer">
+                            Toggle
+                        </button>
+                    </td>
+                </tr>
+            `).join('');
+        }
+    </script>
+</body>
+</html></h1></body></html>
