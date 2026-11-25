@@ -1,1 +1,4 @@
-/* /invitation.html?u=:splat 200
+/index.html /index.html 200
+/portal /portal.html 200
+/invitation /invitation.html 200
+/u/:slug /invitation.html?u=:slug 200
