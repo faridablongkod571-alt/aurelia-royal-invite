@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>The Wedding Celebration — Royal VIP Digital Invite</title>
+    <title>The Wedding Celebration — RaFarah Royal Digital Invite</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -49,6 +49,11 @@
             --bg-deep: #360C14;
             --bg-gradient: linear-gradient(180deg, #22070C 0%, #2F0A11 40%, #140407 100%);
         }
+        [data-theme="kraton-jawa"] {
+            --bg-velvet: #1C1108;
+            --bg-deep: #2D1B0E;
+            --bg-gradient: linear-gradient(180deg, #1C1108 0%, #2A190C 40%, #120A04 100%);
+        }
 
         body {
             background-color: #030807;
@@ -68,6 +73,10 @@
             background-size: 80px 80px;
             pointer-events: none;
             z-index: 0;
+        }
+        [data-theme="kraton-jawa"] .luxury-shell-bg::before {
+            background-image: url("data:image/svg+xml,%3Csvg width='96' height='96' viewBox='0 0 96 96' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' stroke='%23D4AF37' stroke-width='0.85' stroke-opacity='0.14'%3E%3Cpath d='M0 24 Q24 0 48 24 T96 24 M0 72 Q24 48 48 72 T96 72'/%3E%3Ccircle cx='48' cy='48' r='10'/%3E%3C/g%3E%3C/svg%3E");
+            background-size: 96px 96px;
         }
         .text-gold-foil {
             background: linear-gradient(120deg, #AA7C11 0%, #F5E7B2 25%, #D4AF37 50%, #FFF3C4 75%, #9E7618 100%);
@@ -175,13 +184,18 @@
         <!-- Ambient Gold Dust & Touch Sparkles -->
         <canvas id="gold-bokeh-canvas" class="fixed top-0 left-1/2 -translate-x-1/2 w-full max-w-[480px] h-full pointer-events-none z-30"></canvas>
 
-        <!-- Suspended / Inactive Account Notice -->
+        <!-- Suspended / Expired Account Notice -->
         <div id="suspended-overlay" class="hidden fixed inset-0 z-50 bg-obsidian/95 flex items-center justify-center p-6 text-center">
             <div class="royal-card rounded-3xl p-8 max-w-sm">
                 <i class="fa-solid fa-lock text-goldPrimary text-3xl mb-3"></i>
-                <h2 class="font-editorial text-2xl font-bold text-white mb-2">Undangan Belum Aktif</h2>
-                <p class="text-xs text-ivoryPearl/75 mb-5">Tautan undangan ini sedang dinonaktifkan sementara oleh administrator.</p>
-                <a href="index.html" class="btn-royal-gold px-6 py-2.5 rounded-full text-xs uppercase">Kembali ke Beranda</a>
+                <h2 id="suspended-title" class="font-editorial text-2xl font-bold text-white mb-2">Undangan Belum Aktif</h2>
+                <p id="suspended-desc" class="text-xs text-ivoryPearl/75 mb-5">Tautan undangan ini sedang dinonaktifkan sementara oleh administrator.</p>
+                <div class="flex flex-col gap-2.5">
+                    <a href="https://wa.me/6281242433912?text=Halo%20Admin%20RaFarah,%20saya%20ingin%20mengaktifkan/memperpanjang%20masa%20aktif%20undangan." target="_blank" class="btn-royal-gold px-6 py-2.5 rounded-full text-xs uppercase">
+                        <i class="fa-brands fa-whatsapp mr-1.5"></i>Hubungi Admin (081242433912)
+                    </a>
+                    <a href="index.html" class="text-[11px] text-goldChampagne/75 hover:text-goldPrimary">Kembali ke Beranda</a>
+                </div>
             </div>
         </div>
 
@@ -221,7 +235,7 @@
                     <h2 id="guest-name-display" class="font-editorial text-xl sm:text-2xl font-bold text-white tracking-wide">Tamu Kehormatan</h2>
                 </div>
 
-                <button id="btn-open-invitation" class="wax-seal-btn w-20 h-20 rounded-full flex flex-col items-center justify-center cursor-pointer">
+                <button id="btn-open-invitation" type="button" class="wax-seal-btn w-20 h-20 rounded-full flex flex-col items-center justify-center cursor-pointer">
                     <span id="wax-seal-monogram" class="font-cinzel text-lg font-black text-obsidian tracking-tighter leading-none">R&K</span>
                     <span class="text-[7px] font-bold uppercase tracking-[0.2em] text-obsidian/90 mt-1">Buka</span>
                 </button>
@@ -231,13 +245,13 @@
 
         <!-- FLOATING MUSIC & AUTO-SCROLL CONTROLS -->
         <div class="fixed top-5 right-4 sm:right-[calc(50%-222px)] z-40 flex flex-col gap-2.5">
-            <button onclick="toggleAudio()" title="Putar / Jeda Musik"
+            <button type="button" onclick="toggleAudio()" title="Putar / Jeda Musik"
                     class="w-11 h-11 rounded-full bg-emeraldVelvet/90 border border-goldPrimary/70 shadow-lg flex items-center justify-center cursor-pointer">
                 <div id="vinyl-disc" class="w-8 h-8 rounded-full bg-gradient-to-tr from-goldAntique via-goldPrimary to-goldChampagne flex items-center justify-center text-obsidian spin-disc paused-disc">
                     <i class="fa-solid fa-music text-[11px]"></i>
                 </div>
             </button>
-            <button id="btn-autoscroll-toggle" onclick="toggleAutoScroll()" title="Mode Gulir Otomatis"
+            <button id="btn-autoscroll-toggle" type="button" onclick="toggleAutoScroll()" title="Mode Gulir Otomatis"
                     class="w-11 h-11 rounded-full bg-emeraldVelvet/90 border border-goldPrimary/60 shadow-lg flex items-center justify-center text-goldChampagne cursor-pointer">
                 <i id="autoscroll-icon" class="fa-solid fa-angles-down text-xs"></i>
             </button>
@@ -247,6 +261,13 @@
         <main class="relative z-10 pb-24">
             <!-- OPENING -->
             <section id="sec-opening" class="pt-14 pb-10 px-5 text-center">
+                <!-- Gunungan Kayon Ornament (Tampil khusus untuk tema Kraton Jawa) -->
+                <svg id="kraton-gunungan-svg" class="hidden w-20 h-28 mx-auto mb-4 text-goldPrimary reveal" viewBox="0 0 100 140" fill="none">
+                    <path d="M50 4 C25 42, 10 78, 14 128 L86 128 C90 78, 75 42, 50 4 Z" stroke="currentColor" stroke-width="2" fill="rgba(212,175,55,0.12)"/>
+                    <path d="M50 20 L50 128 M28 70 Q50 52 72 70 M22 96 Q50 76 78 96" stroke="currentColor" stroke-width="1.3"/>
+                    <circle cx="50" cy="48" r="6" fill="currentColor"/>
+                </svg>
+
                 <div class="w-16 h-16 rotate-45 border border-goldPrimary/75 flex items-center justify-center mx-auto mb-6 bg-emeraldDeep/80 reveal">
                     <span id="opening-monogram" class="-rotate-45 font-cinzel text-xl font-bold text-gold-foil">R&K</span>
                 </div>
@@ -317,7 +338,7 @@
             <section id="sec-gallery" class="py-10 px-5 text-center">
                 <div class="mb-6 reveal">
                     <p class="font-cinzel text-[11px] tracking-[0.3em] text-goldPrimary uppercase">Potret Kebahagiaan</p>
-                    <h3 class="font-editorial text-3xl font-bold text-ivoryPearl mt-1">Galeri Pre-Wedding</h3>
+                    <h3 class="font-editorial text-3xl font-bold text-ivoryPearl mt-1">Galeri Momen</h3>
                 </div>
                 <div class="grid grid-cols-2 gap-2.5 reveal">
                     <div class="col-span-2 h-52 scroll-photo-frame rounded-2xl border border-goldPrimary/35">
@@ -341,7 +362,7 @@
                     <div class="rounded-2xl p-5 bg-obsidian/90 border border-goldPrimary/50 text-left">
                         <p id="gift-bank1" class="font-cinzel font-bold text-goldChampagne text-sm mb-1">BANK BCA - 8830 1234 5678</p>
                         <p id="gift-bank1-holder" class="text-xs text-ivoryPearl/75 mb-4">a.n. Raka Aditya Pratama</p>
-                        <button onclick="copyBankAccount()" class="btn-royal-gold w-full py-2.5 rounded-xl text-xs uppercase tracking-wider cursor-pointer">
+                        <button type="button" onclick="copyBankAccount()" class="btn-royal-gold w-full py-2.5 rounded-xl text-xs uppercase tracking-wider cursor-pointer">
                             <i class="fa-regular fa-copy mr-1"></i> Salin Rekening
                         </button>
                     </div>
@@ -391,7 +412,7 @@
     <script>
         const urlParams = new URLSearchParams(window.location.search);
         const clientSlug = (urlParams.get('u') || 'raka-kinanti').toLowerCase();
-        const guestNameParam = urlParams.get('to') || urlParams.get('tamu');
+        const guestNameParam = urlParams.get('to') || urlParams.get('tamu') || 'Tamu Kehormatan';
         const themeOverride = urlParams.get('theme');
 
         const FALLBACK_DATA = {
@@ -405,6 +426,7 @@
             groomPhoto: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=600&q=85",
             brideName: "Kinanti Maharani Putri, S.E.",
             bridePhoto: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=600&q=85",
+            parentsInfo: "Putra Pertama Keluarga Besar Mempelai Pria",
             venue: "The Ritz-Carlton Jakarta, Pacific Place",
             address: "Jl. Jend. Sudirman Kav. 52-53, Senayan, Jakarta Selatan",
             mapsUrl: "https://maps.google.com/?q=The+Ritz-Carlton+Jakarta",
@@ -416,14 +438,52 @@
         const clientsDB = JSON.parse(localStorage.getItem('aurelia_clients_db') || '{}');
         const activeConfig = clientsDB[clientSlug] || FALLBACK_DATA;
 
-        if (activeConfig.status === 'suspended') {
+        const isExpired = activeConfig.expiryDate && (new Date() > new Date(activeConfig.expiryDate + 'T23:59:59'));
+        if (activeConfig.status === 'suspended' || isExpired) {
+            if (isExpired) {
+                document.getElementById('suspended-title').textContent = 'Masa Aktif Undangan Berakhir';
+                document.getElementById('suspended-desc').textContent = `Masa tayang undangan ini berakhir pada ${activeConfig.expiryDate}. Silakan hubungi admin RaFarah untuk perpanjangan.`;
+            }
             document.getElementById('suspended-overlay').classList.remove('hidden');
         }
 
         const selectedTheme = themeOverride || activeConfig.theme || 'emerald';
         document.documentElement.setAttribute('data-theme', selectedTheme);
 
-        // Dynamic Event-Type Dictionary (Pernikahan, Tunangan, Akikah, Ulang Tahun)
+        if (selectedTheme === 'kraton-jawa') {
+            document.getElementById('kraton-gunungan-svg').classList.remove('hidden');
+        }
+
+        // Cek apakah menggunakan Template Kustom yang di-paste melalui Panel Admin
+        const templatesDB = JSON.parse(localStorage.getItem('aurelia_templates_db') || '[]');
+        const customTpl = templatesDB.find(t => t.code === selectedTheme && t.customHtml && t.customHtml.trim() !== '');
+        if (customTpl && activeConfig.status !== 'suspended' && !isExpired) {
+            let renderedHtml = customTpl.customHtml;
+            const tokenMap = {
+                '{{coupleShort}}': activeConfig.coupleShort || '',
+                '{{monogram}}': activeConfig.monogram || '',
+                '{{dateText}}': activeConfig.dateText || '',
+                '{{groomName}}': activeConfig.groomName || '',
+                '{{groomPhoto}}': activeConfig.groomPhoto || '',
+                '{{brideName}}': activeConfig.brideName || '',
+                '{{bridePhoto}}': activeConfig.bridePhoto || '',
+                '{{parentsInfo}}': activeConfig.parentsInfo || '',
+                '{{venue}}': activeConfig.venue || '',
+                '{{address}}': activeConfig.address || '',
+                '{{mapsUrl}}': activeConfig.mapsUrl || 'https://maps.google.com',
+                '{{youtubeId}}': activeConfig.youtubeId || '2Vv-BfVoq4g',
+                '{{bank1}}': activeConfig.bank1 || '',
+                '{{bank1Holder}}': activeConfig.bank1Holder || '',
+                '{{guestName}}': guestNameParam
+            };
+            Object.entries(tokenMap).forEach(([token, val]) => {
+                renderedHtml = renderedHtml.split(token).join(val);
+            });
+            document.open();
+            document.write(renderedHtml);
+            document.close();
+        }
+
         const EVENT_PRESETS = {
             wedding: {
                 subtitle: "The Wedding Celebration",
@@ -667,7 +727,7 @@
                 p.y += p.vy;
                 if (p.y < 0) p.y = canvas.height;
                 ctx.beginPath();
-                ctx.fillStyle = 'rgba(245, 231, 178, 0.45)';
+                ctx.fillStyle = selectedTheme === 'kraton-jawa' ? 'rgba(255, 250, 240, 0.55)' : 'rgba(245, 231, 178, 0.45)';
                 ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
                 ctx.fill();
             });
